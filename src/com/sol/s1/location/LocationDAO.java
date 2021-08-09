@@ -1,7 +1,6 @@
 package com.sol.s1.location;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +15,7 @@ public class LocationDAO {
 		dbConnect = new DBConnect();
 	}
 	
+	// Location에서 id와 일치하는 정보를 조회
 	public void getOne(int location_id) {
 		Connection con = null;
 		PreparedStatement st = null;
@@ -53,21 +53,13 @@ public class LocationDAO {
 	public void getList() {
 		// LOCATIONS Table을 조회해서 출력
 		// 1. 접속 정보
-		String user = "user01";
-		String password = "user01";
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String driver = "oracle.jdbc.driver.OracleDriver";
-		
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		
 		try {
-			// 2. 드라이버 로딩
-			Class.forName(driver);
-			
 			// 3. 접속
-			con = DriverManager.getConnection(url, user, password);
+			con = dbConnect.getConnection();
 			
 			// 4. SQL문 생성
 			String sql = "SELECT * FROM LOCATIONS";
