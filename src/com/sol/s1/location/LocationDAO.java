@@ -82,4 +82,62 @@ public class LocationDAO {
 		}
 		return result;
 	}
+	
+	// 지역 정보 추가
+	public int setLocation(LocationDTO locationDTO) {
+		Connection con = null;
+		PreparedStatement st = null;
+		int result = 0;
+		
+		try {
+			con = dbConnect.getConnection();
+			String sql = "INSERT INTO LOCATIONS VALUES (?, ?, ?, ?, ?, ?)";
+			st = con.prepareStatement(sql);
+			st.setInt(1, locationDTO.getLocation_id());
+			st.setString(2, locationDTO.getStreet_address());
+			st.setString(3, locationDTO.getPostal_code());
+			st.setString(4, locationDTO.getCity());
+			st.setString(5, locationDTO.getState_province());
+			st.setString(6, locationDTO.getCountry_id());
+			result = st.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	// 지역 정보 삭제
+	public int delLocation(LocationDTO locationDTO) {
+		Connection con = null;
+		PreparedStatement st = null;
+		int result = 0;
+		try {
+			con = dbConnect.getConnection();
+			String sql = "DELETE FROM LOCATIONS WHERE LOCATION_ID = ?";
+			st = con.prepareStatement(sql);
+			st.setInt(1, locationDTO.getLocation_id());
+			result = st.executeUpdate();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }
